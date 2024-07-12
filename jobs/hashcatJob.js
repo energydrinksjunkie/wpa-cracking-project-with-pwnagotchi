@@ -5,7 +5,7 @@ const wordlistPath = process.env.WORDLIST_PATH;
 const hashcatJob = async (pcapPath) => {
 
     return new Promise((resolve, reject) => {
-        const hashcatCmd = `hashcat -m 22000 ${pcapPath} ${wordlistPath} --potfile-disable -o password.txt`;
+        const hashcatCmd = `hashcat -m 22000 ${pcapPath} ${wordlistPath} --show`;
 
         exec(hashcatCmd, (err, stdout, stderr) => {
             // if (err) {
