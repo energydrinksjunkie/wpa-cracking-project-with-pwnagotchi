@@ -11,8 +11,12 @@ router.post('/', upload.single('pcap'), (req, res) => {
         return res.status(400).send('No file uploaded.');
     }
 
-    const pcapPath = req.file.path;
-    const outputPath = path.join(__dirname, '../uploads', 'handshake.hccapx');
+
+    const pcapPath = path.resolve(req.file.path);
+    const outputPath = path.resolve(__dirname, '../uploads', `${req.file.filename}.hccapx`);
+
+    console.log(`PCAP Path: ${pcapPath}`);
+    console.log(`Output Path: ${outputPath}`);
 
     exec(`hcxpcapngtool ${pcapPath} -o ${outputPath}`, (err, stdout, stderr) => {
         if (err) {

@@ -2,6 +2,7 @@ const express = require('express');
 const upload = require('./routes/upload');
 const hashcatQueue = require('./queues/hashcatQueue');
 const hashcatJob = require('./jobs/hashcatJob');
+const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
@@ -19,8 +20,16 @@ hashcatQueue.process(async (job) => {
 
     try {
         const result = await hashcatJob(outputPath);
+
+        // // Pošalji obaveštenje na webhook URL
+        // if (process.env.WEBHOOK_URL) {
+        //     await axios.post(process.env.WEBHOOK_URL, {
+        //         result: result,
+        //     });
+        // }
+
         console.log(result);
     } catch (error) {
-        console.error(`Error processing job ${error.message}}`);
+        console.error(`Error processing job: ${error.message}`);
     }
 });
