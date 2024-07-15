@@ -1,20 +1,22 @@
-# pcap-cracking-server
+# wpa-cracking-project-with-pwnagotchi 
+
+## backend
 
 Node.js app
 
-## tools needed
+### tools needed
 
 - hashcat
 
 - hcxpcapngtool
 
-## databases
+### databases
 
 - mongodb
 
 - redis
 
-## .env example
+### .env example
 
 ```
 PORT=3000
@@ -23,3 +25,5 @@ WEBHOOK_URL='http://localhost:4000/webhook'
 MONGO_URI='mongodb://localhost:27017/yourdatabase'
 JWT_SECRET='secret'
 ```
+
+## frontend
