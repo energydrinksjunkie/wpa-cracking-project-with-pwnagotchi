@@ -5,9 +5,13 @@ const path = require('path');
 const fs = require('fs');
 const hashcatQueue = require('../queues/hashcatQueue');
 const upload = multer({ dest: 'uploads/' });
+const verifyApiKey = require('../middleware/apiKey');
+const verifyContentTypeMiddleware = require('../middleware/contentType');
+const Handshake = require('../models/handshake');
+const handshake = require('../models/handshake');
 const router = express.Router();
 
-router.post('/', upload.single('pcap'), (req, res) => {
+router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
@@ -19,23 +23,35 @@ router.post('/', upload.single('pcap'), (req, res) => {
     console.log(`PCAP Path: ${pcapPath}`);
     console.log(`Output Path: ${outputPath}`);
 
-    exec(`hcxpcapngtool ${pcapPath} -o ${outputPath}`, (err, stdout, stderr) => {
-        if (err) {
-            console.error(`Error extracting handshake: ${stderr}`);
-            return res.status(500).send('Error extracting handshake.');
-        }
+    
+    try {
+        const newHandshake = await Handshake.create({userId: req.user._id, filename: req.file.originalname});
 
-        // Dodavanje zadatka u red
-        hashcatQueue.add({ outputPath });
+        exec(`hcxpcapngtool ${pcapPath} -o ${outputPath}`, (err, stdout, stderr) => {
+            if (err) {
+                console.error(`Error extracting handshake: ${stderr}`);
+                return res.status(500).send('Error extracting handshake.');
+            }
 
+            hashcatQueue.add('hashcat-job',{filePath: outputPath, handshakeId: newHandshake._id});
+
+            fs.unlink(pcapPath, (unlinkErr) => {
+                if (unlinkErr) {
+                    console.error(`Error deleting uploaded file: ${unlinkErr}`);
+                }
+            });
+
+            res.send('File uploaded and handshake extracted. Hashcat will process in the background.');
+        });
+    } catch (dbError) {
+        console.error(`Error saving handshake to database: ${dbError}`);
         fs.unlink(pcapPath, (unlinkErr) => {
             if (unlinkErr) {
                 console.error(`Error deleting uploaded file: ${unlinkErr}`);
             }
         });
-
-        res.send('File uploaded and handshake extracted. Hashcat will process in the background.');
-    });
+        res.status(500).send('Error saving handshake to database.');
+    }
 });
 
 module.exports = router;

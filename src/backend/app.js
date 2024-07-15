@@ -7,6 +7,7 @@ const hashcatJob = require('./jobs/hashcatJob');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+require('./jobs/processJobs');
 
 const app = express();
 const port = process.env.PORT || 3000;
