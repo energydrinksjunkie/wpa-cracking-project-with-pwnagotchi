@@ -132,4 +132,4 @@ dist
 
 # custom
 wordlist.txt
-uploads/
+uploads/*
