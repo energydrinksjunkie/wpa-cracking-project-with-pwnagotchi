@@ -4,6 +4,7 @@ const handshake = require('./routes/handshake');
 const auth = require('./routes/auth');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+require('./jobs/processJobs');
 
 const app = express();
 const port = process.env.PORT || 3000;
