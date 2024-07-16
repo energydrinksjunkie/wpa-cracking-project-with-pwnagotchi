@@ -33,7 +33,7 @@ const hashcatJob = async (job) => {
                 return reject(new Error(`Hashcat process exited with code ${code}\n${hashcatError}`));
             }
 
-            if (hashcatOutput.includes('All hashes found in potfile!')) {
+            if (hashcatOutput.includes('All hashes found')) {
                 const hashcatShowCmd = `hashcat --show -m 22000 ${filePath} ${wordlistPath}`;
                 
                 exec(hashcatShowCmd, async (error, stdout, stderr) => {
@@ -55,7 +55,7 @@ const hashcatJob = async (job) => {
             } else if(hashcatOutput.includes('Cracked')){
                 const handshake = await Handshake.findById(handshakeId);
                 if (handshake) {
-                    await handshake.updateHandshake(stdout);
+                    await handshake.updateHandshake('Cracked');
                     console.log(`Handshake with ID ${handshakeId} updated successfully.`);
                 } else {
                     console.error(`Handshake with ID ${handshakeId} not found.`);
