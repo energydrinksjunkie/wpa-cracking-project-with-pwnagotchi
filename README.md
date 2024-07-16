@@ -25,7 +25,7 @@ main.plugins.pwnagotchi-plugin.api_url = ""
 main.plugins.pwnagotchi-plugin.download_results = false
 ```
 
-You will receive the api_key when you register on the web application. This key is necessary for the plugin to authenticate and communicate with the backend.
+You will receive the `api_key` when you register on the web application. This key is necessary for the plugin to authenticate and communicate with the backend.
 
 ## Backend
 
