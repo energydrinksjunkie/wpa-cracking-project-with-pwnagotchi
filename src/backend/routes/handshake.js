@@ -10,7 +10,7 @@ const verifyContentTypeMiddleware = require('../middleware/contentType');
 const Handshake = require('../models/handshake');
 const router = express.Router();
 
-router.post('/upload', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'), async (req, res) => {
+router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
@@ -24,6 +24,16 @@ router.post('/upload', verifyContentTypeMiddleware, verifyApiKey, upload.single(
 
     
     try {
+        const existingHandshake = await Handshake.findOne({ userId: req.user._id, filename: req.file.originalname });
+        if (existingHandshake) {
+            fs.unlink(pcapPath, (unlinkErr) => {
+                if (unlinkErr) {
+                    console.error(`Error deleting uploaded file: ${unlinkErr}`);
+                }
+            });
+            return res.status(400).send('Handshake already submitted.');
+        }
+
         const newHandshake = await Handshake.create({userId: req.user._id, filename: req.file.originalname});
 
         exec(`hcxpcapngtool ${pcapPath} -o ${outputPath}`, (err, stdout, stderr) => {
@@ -53,7 +63,7 @@ router.post('/upload', verifyContentTypeMiddleware, verifyApiKey, upload.single(
     }
 });
 
-router.get('/getAllForUser', verifyApiKey, async (req, res) => {
+router.get('/', verifyApiKey, async (req, res) => {
     try {
         const handshakes = await Handshake.find({ userId: req.user._id });
         res.json(handshakes);
