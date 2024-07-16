@@ -1,8 +1,9 @@
 const Queue = require('bull');
+require('dotenv').config();
 const hashcatQueue = new Queue('hashcat', {
     redis: {
-        host: '127.0.0.1',
-        port: 6379
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
     }
 });
 

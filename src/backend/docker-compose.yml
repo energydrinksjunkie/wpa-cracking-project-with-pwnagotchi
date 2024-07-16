@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend:
+    image: wpa-cracking-backend:latest
+    container_name: backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+      - redis
+    restart: always
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: always

@@ -8,10 +8,9 @@ const upload = multer({ dest: 'uploads/' });
 const verifyApiKey = require('../middleware/apiKey');
 const verifyContentTypeMiddleware = require('../middleware/contentType');
 const Handshake = require('../models/handshake');
-const handshake = require('../models/handshake');
 const router = express.Router();
 
-router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'), async (req, res) => {
+router.post('/upload', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
@@ -51,6 +50,16 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
             }
         });
         res.status(500).send('Error saving handshake to database.');
+    }
+});
+
+router.get('/getAllForUser', verifyApiKey, async (req, res) => {
+    try {
+        const handshakes = await Handshake.find({ userId: req.user._id });
+        res.json(handshakes);
+    } catch (error) {
+        console.error('Error fetching handshakes:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
