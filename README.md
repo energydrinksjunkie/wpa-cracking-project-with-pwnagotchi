@@ -27,6 +27,8 @@ main.plugins.pwnagotchi-plugin.download_results = false
 
 You will receive the `api_key` when you register on the web application. This key is necessary for the plugin to authenticate and communicate with the backend.
 
+![pwny](pwny.jpg)
+
 ## Backend
 
 The backend is built using a Node.js application.
