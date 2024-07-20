@@ -1,6 +1,6 @@
 const { spawn, exec } = require('child_process');
 const path = require('path');
-const fs = require('fs'); // Uvoz fs modula
+const fs = require('fs');
 const Handshake = require('../models/handshake');
 require('dotenv').config();
 const wordlistPath = process.env.WORDLIST_PATH;
