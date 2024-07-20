@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const handshakeSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     filename: { type: String, required: true },
-    cracked: { type: Boolean },
+    status: { type: String, enum: ['Awaiting', 'In progress', 'Exhausted', 'Cracked', 'Failed'], default: 'Awaiting' },
     password: { type: String, default: null }
 });
 
 handshakeSchema.methods.updateHandshake = async function(result) {
-    this.cracked = true;
+    this.status = 'Cracked';
     this.password = result;
 
     await this.save();
