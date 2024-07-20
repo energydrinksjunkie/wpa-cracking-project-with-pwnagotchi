@@ -32,7 +32,7 @@ You will receive the `api_key` when you register on the web application. This ke
 
 ## Backend
 
-The backend is built using a Node.js application.
+The backend is built using Node.js.
 
 ### Tools needed
 
