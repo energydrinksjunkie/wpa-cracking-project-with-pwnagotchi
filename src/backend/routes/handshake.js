@@ -100,8 +100,7 @@ router.get('/', verifyApiKey, async (req, res) => {
 
 router.get('/browser', verifyJWT, async (req, res) => {
     try {
-        const handshakes = await Handshake.find({ userId: req.user._id, status: 'cracked' });
-        
+        const handshakes = await Handshake.find({ userId: req.user._id });
         res.json(handshakes);
     } catch (error) {
         console.error('Error fetching handshakes:', error);

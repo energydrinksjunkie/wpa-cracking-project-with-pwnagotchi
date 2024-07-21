@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (user && await user.matchPassword(password)) {
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
             res.status(200).json({ message: 'Login successful', token });
         } else {
             res.status(401).json({ error: 'Invalid username or password' });
