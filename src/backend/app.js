@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const handshake = require('./routes/handshake');
 const auth = require('./routes/auth');
@@ -8,6 +9,8 @@ require('./jobs/processJobs');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
