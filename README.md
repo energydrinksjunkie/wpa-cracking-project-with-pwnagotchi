@@ -60,3 +60,13 @@ JWT_SECRET='yoursecret'
 ```
 
 ## Frontend
+
+The frontend is built using React.
+
+### .env example
+
+Create a `.env` file with the following environment variables:
+
+```
+PORT=4000
+```
