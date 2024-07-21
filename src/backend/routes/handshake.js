@@ -23,6 +23,9 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
     console.log(`PCAP Path: ${pcapPath}`);
     console.log(`Output Path: ${outputPath}`);
 
+    const filename = req.file.originalname;
+    const ssid = filename.split('_')[0];
+
     
     try {
         const existingHandshake = await Handshake.findOne({ userId: req.user._id, filename: req.file.originalname });
@@ -35,7 +38,9 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
             return res.status(400).send('Handshake already submitted.');
         }
 
-        const newHandshake = await Handshake.create({userId: req.user._id, filename: req.file.originalname});
+        const newHandshake = await Handshake.create({userId: req.user._id,
+                                                    filename: filename,
+                                                    ssid: ssid});
 
         await new Promise((resolve, reject) => {
             const hcxProcess = spawn('hcxpcapngtool', [pcapPath, '-o', outputPath]);
@@ -78,11 +83,15 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
 
 router.get('/', verifyApiKey, async (req, res) => {
     try {
-        const handshakes = await Handshake.find({ userId: req.user._id, status: 'cracked' });
-        const passwords = handshakes.map(handshake => handshake.password);
+        const handshakes = await Handshake.find({ userId: req.user._id, status: 'Cracked' });
+        const passwords = handshakes.map(handshake => {
+            const ssid = handshake.ssid;
+            const password = handshake.password;
+            return `${ssid}:${password}`;
+        });
 
         res.setHeader('Content-Type', 'text/plain');
-        res.send(passwords.join(''));
+        res.send(passwords.join('\n'));
     } catch (error) {
         console.error('Error fetching handshakes:', error);
         res.status(500).json({ error: 'Internal server error' });

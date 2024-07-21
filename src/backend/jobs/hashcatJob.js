@@ -65,7 +65,7 @@ const hashcatJob = async (job) => {
                     const firstLine = lines[0];
                     const data = firstLine.split(':');
                     if (data.length >= 5) {
-                        const responseMessage = `${data[3]}:${data[4]}`;
+                        const responseMessage = data[4];
                         handshake.password = responseMessage;
                         handshake.status = 'Cracked';
                         await handshake.save();
@@ -76,7 +76,7 @@ const hashcatJob = async (job) => {
                         reject(new Error('No valid passwords found in hashcat --show output.'));
                     }
                 } else {
-                    handshake.status = 'Exhausted';
+                    handshake.status = 'Failed';
                     await handshake.save();
                     reject(new Error('No passwords found in hashcat --show output.'));
                 }
