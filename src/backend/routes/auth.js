@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const verifyJWT = require('../middleware/verifyJWT');
 const User = require('../models/user');
 const router = express.Router();
 
@@ -28,6 +29,15 @@ router.post('/login', async (req, res) => {
         }
     } catch (error) {
         res.status(400).json({ error: 'Error logging in', details: error.message });
+    }
+});
+
+router.get('/api_key', verifyJWT, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        res.status(200).json({api_key : user.apiKey});
+    } catch (error) {
+        res.status(400).json({ error: 'Error fetching API key', details: error.message });
     }
 });
 

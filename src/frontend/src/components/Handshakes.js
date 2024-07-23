@@ -4,12 +4,16 @@ import axios from 'axios';
 
 function HandshakeList() {
   const [handshakes, setHandshakes] = useState([]);
-  const api_url = 'http://localhost:3000/handshake/browser';
+  const [apiKey, setApiKey] = useState('');
+  const handshake_url = 'http://localhost:3000/handshake/browser';
+  const key_url = 'http://localhost:3000/auth/api_key';
+
+  const [copySuccess, setCopySuccess] = useState('');
 
   useEffect(() => {
     const fetchHandshakes = async () => {
       try {
-        const response = await axios.get(api_url, {
+        const response = await axios.get(handshake_url, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
         setHandshakes(response.data);
@@ -18,6 +22,18 @@ function HandshakeList() {
       }
     };
 
+    const fetchApiKey = async () => {
+      try {
+        const response = await axios.get(key_url, {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        });
+        setApiKey(response.data.api_key);
+      } catch (error) {
+        console.error('Error fetching API key:', error);
+      }
+    };
+
+    fetchApiKey();
     fetchHandshakes();
   }, []);
 
@@ -36,6 +52,18 @@ function HandshakeList() {
       default:
         return '';
     }
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(apiKey)
+      .then(() => {
+        setCopySuccess('API key copied to clipboard!');
+        setTimeout(() => setCopySuccess(''), 5000);
+      })
+      .catch((error) => {
+        console.error('Failed to copy API key:', error);
+        setCopySuccess('Failed to copy API key');
+      });
   };
 
   return (
@@ -61,6 +89,11 @@ function HandshakeList() {
           </tr>
         ))}
       </table>
+      <p>
+        Your API key is: <strong>{apiKey}</strong>
+        <button onClick={copyToClipboard} className="copy-button">Copy</button>
+      </p>
+      {copySuccess && <p className="copy-success">{copySuccess}</p>}
     </>
   );
 }

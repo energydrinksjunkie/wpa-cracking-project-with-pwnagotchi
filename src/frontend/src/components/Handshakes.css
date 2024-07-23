@@ -1,11 +1,12 @@
 table {
-  width: 100%;
+  width: 90vw;
   border-collapse: collapse;
+  margin: auto;
 }
 
 th, td {
-  padding: 8px;
-  text-align: left;
+  padding: 1em;
+  text-align: center;
 }
 
 .status-awaiting {
@@ -28,6 +29,6 @@ th, td {
 
 .status-failed {
   background-color: #c32f27;
-  color: white;
+  color: black;
 }
   
