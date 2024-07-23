@@ -69,4 +69,5 @@ Create a `.env` file with the following environment variables:
 
 ```
 PORT=4000
+REACT_APP_BACKEND_URL='yourbackendurl'
 ```
