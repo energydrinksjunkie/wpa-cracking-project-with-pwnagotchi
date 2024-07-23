@@ -7,7 +7,7 @@ function HandshakeList() {
   const [apiKey, setApiKey] = useState('');
   const handshake_url = 'http://localhost:3000/handshake/browser';
   const key_url = 'http://localhost:3000/auth/api_key';
-
+  const handshakeExportUrl = 'http://localhost:3000/handshake';
   const [copySuccess, setCopySuccess] = useState('');
 
   useEffect(() => {
@@ -66,6 +66,28 @@ function HandshakeList() {
       });
   };
 
+  
+const exportHandshakes = async () => {
+  try {
+      const response = await axios.get(handshakeExportUrl, {
+          headers: { 'api_key': apiKey },
+          responseType: 'text'
+      });
+
+      const blob = new Blob([response.data], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'cracked.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+  } catch (error) {
+      console.error('Error exporting handshakes:', error);
+  }
+};
+
   return (
     <>
       <h2>Handshake List</h2>
@@ -89,6 +111,7 @@ function HandshakeList() {
           </tr>
         ))}
       </table>
+      <button onClick={exportHandshakes} className="export-button">Export Handshakes</button>
       <p>
         Your API key is: <strong>{apiKey}</strong>
         <button onClick={copyToClipboard} className="copy-button">Copy</button>
