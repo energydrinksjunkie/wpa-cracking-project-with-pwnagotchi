@@ -1,6 +1,7 @@
 import './Handshakes.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const { REACT_APP_BACKEND_URL } = process.env;
 
 
 const ITEMS_PER_PAGE = 10;
@@ -12,9 +13,9 @@ function HandshakeList() {
   const [totalPages, setTotalPages] = useState(1);
   const [copySuccess, setCopySuccess] = useState('');
 
-  const handshake_url = 'http://localhost:3000/handshake/browser';
-  const key_url = 'http://localhost:3000/auth/api_key';
-  const handshakeExportUrl = 'http://localhost:3000/handshake';
+  const handshake_url = REACT_APP_BACKEND_URL+'/handshake/browser';
+  const key_url = REACT_APP_BACKEND_URL+'/auth/api_key';
+  const handshakeExportUrl = REACT_APP_BACKEND_URL+'/handshake';
 
   useEffect(() => {
     const fetchHandshakes = async () => {

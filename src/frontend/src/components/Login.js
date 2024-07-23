@@ -1,11 +1,12 @@
 import './Login.css';
 import React, { useState } from "react";
 import axios from "axios";
+const { REACT_APP_BACKEND_URL } = process.env;
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const api_url = 'http://localhost:3000/auth/login';
+    const api_url = REACT_APP_BACKEND_URL+'/auth/login';
 
     const handleLogin = async (e) => {
         try {
