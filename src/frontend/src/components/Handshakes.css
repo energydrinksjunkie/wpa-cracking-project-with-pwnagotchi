@@ -3,6 +3,29 @@ table {
   border-collapse: collapse;
   margin: auto;
 }
+  
+.pagination {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: #ddd;
+}
 
 th, td {
   padding: 1em;
@@ -11,10 +34,12 @@ th, td {
 
 .status-awaiting {
   background-color: #7e2e84;
+  color: black;
 }
 
 .status-in-progress {
   background-color: #9ba2ff;
+  color: black;
 }
 
 .status-cracked {
