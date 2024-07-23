@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+.status-awaiting {
+  background-color: #7e2e84;
+}
+
+.status-in-progress {
+  background-color: #9ba2ff;
+}
+
+.status-cracked {
+  background-color: #a1e887;
+  color: black;
+}
+
+.status-exhausted {
+  background-color: #e09f3e;
+  color: black;
+}
+
+.status-failed {
+  background-color: #c32f27;
+  color: white;
+}
+  

@@ -1,3 +1,4 @@
+import './Handshakes.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -20,17 +21,47 @@ function HandshakeList() {
     fetchHandshakes();
   }, []);
 
+  const getStatusClassName = (status) => {
+    switch (status) {
+      case 'Awaiting':
+        return 'status-awaiting';
+      case 'In progress':
+        return 'status-in-progress';
+      case 'Cracked':
+        return 'status-cracked';
+      case 'Exhausted':
+        return 'status-exhausted';
+      case 'Failed':
+        return 'status-failed';
+      default:
+        return '';
+    }
+  };
+
   return (
-    <div>
+    <>
       <h2>Handshake List</h2>
-      <ul>
+      <table border={1}>
+        <tr>
+          <th>Status</th>
+          <th>SSID</th>
+          <th>Password</th>
+        </tr>
         {handshakes.map((handshake) => (
-          <li key={handshake._id}>
-            {handshake.ssid}: {handshake.password}
-          </li>
+          <tr key={handshake._id} className={getStatusClassName(handshake.status)}>
+            <td>
+              {handshake.status}
+            </td>
+            <td>
+            {handshake.ssid}
+            </td>
+            <td>
+            {handshake.password}
+            </td>
+          </tr>
         ))}
-      </ul>
-    </div>
+      </table>
+    </>
   );
 }
 
