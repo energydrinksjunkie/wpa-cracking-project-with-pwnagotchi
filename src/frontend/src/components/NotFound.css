@@ -1,0 +1,28 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    height: 100vh;
+  }
+  
+  .not-found-image {
+    max-width: 100%;
+    height: auto;
+    width: 400px; /* Adjust the width as needed */
+    margin-bottom: 20px;
+  }
+  
+  .not-found-container h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .not-found-container p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  

@@ -12,6 +12,7 @@ function HandshakeList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [copySuccess, setCopySuccess] = useState('');
+  const [file, setFile] = useState(null);
 
   const handshake_url = REACT_APP_BACKEND_URL+'/handshake/browser';
   const key_url = REACT_APP_BACKEND_URL+'/auth/api_key';
@@ -23,7 +24,7 @@ function HandshakeList() {
         const response = await axios.get(handshake_url, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
-        setHandshakes(response.data);
+        setHandshakes(response.data.reverse());
         setTotalPages(Math.ceil(response.data.length / ITEMS_PER_PAGE));
       } catch (error) {
         console.error('Error fetching handshakes:', error);
@@ -43,7 +44,15 @@ function HandshakeList() {
 
     fetchApiKey();
     fetchHandshakes();
+
+    const interval = setInterval(() => {
+      fetchHandshakes();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  
 
   const getStatusClassName = (status) => {
     switch (status) {
@@ -109,6 +118,40 @@ function HandshakeList() {
     window.location.href = '/login';
   }
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+
+    if (!file) {
+      alert('Please select a file to upload.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('pcap', file);
+
+    try {
+      const response = await axios.post(handshakeExportUrl, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'api_key': apiKey
+        }
+      });
+
+      alert('File uploaded successfully');
+      const updatedHandshakes = await axios.get(handshake_url, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      setHandshakes(updatedHandshakes.data.reverse());
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file');
+    }
+  };
+
   return (
     <>
       <h2>Handshake List</h2>
@@ -144,6 +187,11 @@ function HandshakeList() {
         </div>
         <button onClick={exportHandshakes} className="export-button">Export Handshakes</button>
       </div>
+      <h3>Upload PCAP File</h3>
+      <form onSubmit={handleUpload}>
+        <input type="file" onChange={handleFileChange} required />
+        <button type="submit" className="upload-button">Upload</button>
+      </form>
       <p className="api-key">
         {copySuccess && <p className="copy-success">{copySuccess}</p>}
         Your API key is: <strong>{apiKey}</strong>
