@@ -23,21 +23,24 @@ function Login() {
     };
 
     return (
-        <>
-            <h1>Login</h1>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
+            <>
+            <div className="login">
+                <h1>Login</h1>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
+                <button onClick={handleLogin}>Login</button>
+                <p className="click-here" onClick={() => window.location.href = '/register'}>Don't have an account?</p>
+            </div>
         </>
     );
 }

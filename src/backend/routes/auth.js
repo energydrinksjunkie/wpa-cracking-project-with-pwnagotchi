@@ -41,4 +41,8 @@ router.get('/api_key', verifyJWT, async (req, res) => {
     }
 });
 
+router.get('/session', verifyJWT, async (req, res) => {
+    res.status(200).json({ message: 'Session is valid' });
+});
+
 module.exports = router;

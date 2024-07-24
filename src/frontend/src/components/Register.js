@@ -1,3 +1,4 @@
+import './Register.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -16,12 +17,15 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button onClick={handleRegister}>Register</button>
-    </div>
+    <>
+      <div className="register">
+        <h2>Register</h2>
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+        <button onClick={handleRegister}>Register</button>
+        <p className="click-here" onClick={() => window.location.href = '/login'}>Already have an account?</p>
+      </div>
+    </>
   );
 }
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 const { REACT_APP_BACKEND_URL } = process.env;
 
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 7;
 
 function HandshakeList() {
   const [handshakes, setHandshakes] = useState([]);
@@ -38,7 +38,6 @@ function HandshakeList() {
         setApiKey(response.data.api_key);
       } catch (error) {
         console.error('Error fetching API key:', error);
-        window.location.href = '/login';
       }
     };
 
@@ -67,7 +66,7 @@ function HandshakeList() {
     navigator.clipboard.writeText(apiKey)
       .then(() => {
         setCopySuccess('API key copied to clipboard!');
-        setTimeout(() => setCopySuccess(''), 5000);
+        setTimeout(() => setCopySuccess(''), 2500);
       })
       .catch((error) => {
         console.error('Failed to copy API key:', error);
@@ -105,6 +104,11 @@ function HandshakeList() {
     setCurrentPage(pageNumber);
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  }
+
   return (
     <>
       <h2>Handshake List</h2>
@@ -126,23 +130,26 @@ function HandshakeList() {
           ))}
         </tbody>
       </table>
-      <div className="pagination">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            className={index + 1 === currentPage ? 'active' : ''}
-          >
-            {index + 1}
-          </button>
-        ))}
+      <div className="under-table">
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={index + 1 === currentPage ? 'active' : ''}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+        <button onClick={exportHandshakes} className="export-button">Export Handshakes</button>
       </div>
-      <button onClick={exportHandshakes} className="export-button">Export Handshakes</button>
-      <p>
+      <p className="api-key">
+        {copySuccess && <p className="copy-success">{copySuccess}</p>}
         Your API key is: <strong>{apiKey}</strong>
         <button onClick={copyToClipboard} className="copy-button">Copy</button>
       </p>
-      {copySuccess && <p className="copy-success">{copySuccess}</p>}
+      <button onClick={logout} className="logout-button">Logout</button>
     </>
   );
 }
