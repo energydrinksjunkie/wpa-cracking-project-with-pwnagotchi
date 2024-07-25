@@ -134,13 +134,13 @@ class WpaSec(plugins.Plugin):
                 display.on_normal()
 
             if 'download_results' in self.options and self.options['download_results']:
-                cracked_file = os.path.join(handshake_dir, 'handshake_uploads.txt')
+                cracked_file = os.path.join(handshake_dir, 'cracked_passwords.txt')
                 if os.path.exists(cracked_file):
                     last_check = datetime.fromtimestamp(os.path.getmtime(cracked_file))
                     if last_check is not None and ((datetime.now() - last_check).seconds / (60 * 60)) < 1:
                         return
                 try:
-                    self._download_handshake(os.path.join(handshake_dir, 'handshake_uploads.txt'))
+                    self._download_handshake(os.path.join(handshake_dir, 'cracked_passwords.txt'))
                     logging.info("HANDSHAKE_UPLOAD: Downloaded cracked passwords.")
                 except requests.exceptions.RequestException as req_e:
                     logging.debug("HANDSHAKE_UPLOAD: %s", req_e)
