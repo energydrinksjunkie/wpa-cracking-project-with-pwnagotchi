@@ -197,6 +197,7 @@ function HandshakeList() {
         Your API key is: <strong>{apiKey}</strong>
         <button onClick={copyToClipboard} className="copy-button">Copy</button>
       </p>
+      <p>API url: {handshakeExportUrl}</p>
       <button onClick={logout} className="logout-button">Logout</button>
     </>
   );
