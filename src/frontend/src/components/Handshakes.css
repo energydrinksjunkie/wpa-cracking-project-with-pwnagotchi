@@ -85,6 +85,7 @@ th, td {
 .copy-success {
   color: green;
   font-size: 14px;
+  text-align: center;
 }
 
 .export-button {

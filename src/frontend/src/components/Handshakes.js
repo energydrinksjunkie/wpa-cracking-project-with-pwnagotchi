@@ -47,7 +47,7 @@ function HandshakeList() {
 
     const interval = setInterval(() => {
       fetchHandshakes();
-    }, 30000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -154,6 +154,7 @@ function HandshakeList() {
 
   return (
     <>
+    <button onClick={logout} className="logout-button">Logout</button>
       <h2>Handshake List</h2>
       <table border={1}>
         <thead>
@@ -198,7 +199,6 @@ function HandshakeList() {
         <button onClick={copyToClipboard} className="copy-button">Copy</button>
       </p>
       <p>API url: {handshakeExportUrl}</p>
-      <button onClick={logout} className="logout-button">Logout</button>
     </>
   );
 }
