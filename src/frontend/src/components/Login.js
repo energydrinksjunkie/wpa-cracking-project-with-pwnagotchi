@@ -6,6 +6,7 @@ const { REACT_APP_BACKEND_URL } = process.env;
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const api_url = REACT_APP_BACKEND_URL+'/auth/login';
 
     const handleLogin = async (e) => {
@@ -18,6 +19,10 @@ function Login() {
             window.location.href = '/handshakes';
             console.log(response);
         } catch (error) {
+            setError('Invalid username or password');
+            setTimeout(() => {
+                setError('');
+            }, 2000);
             console.error(error);
         }
     };
@@ -39,6 +44,7 @@ function Login() {
                     onChange={e => setPassword(e.target.value)}
                 />
                 <button onClick={handleLogin}>Login</button>
+                {error && <p>{error}</p>}
                 <p className="click-here" onClick={() => window.location.href = '/register'}>Don't have an account?</p>
             </div>
         </>

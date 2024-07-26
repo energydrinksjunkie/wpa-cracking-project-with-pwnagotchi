@@ -4,7 +4,7 @@ import axios from 'axios';
 const { REACT_APP_BACKEND_URL } = process.env;
 
 
-const ITEMS_PER_PAGE = 7;
+const ITEMS_PER_PAGE = 15;
 
 function HandshakeList() {
   const [handshakes, setHandshakes] = useState([]);

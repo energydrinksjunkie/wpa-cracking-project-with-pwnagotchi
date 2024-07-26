@@ -1,0 +1,15 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand{
+    color: white;
+    text-decoration: none;
+    font-size: 5pt;
+}
+
+.navbar-brand pre {
+    margin: 0;
+}

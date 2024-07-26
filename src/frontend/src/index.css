@@ -8,12 +8,6 @@ body {
 
   background-color: #221e22;
   color: white;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 
 code {
@@ -22,10 +16,4 @@ code {
 }
 
 #root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  height: 95vh;
-  width: 90vw;
 }
