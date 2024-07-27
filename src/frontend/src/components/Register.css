@@ -1,0 +1,167 @@
+.window {
+    background-color: black;
+    width: 30em;
+    height: 20em;
+    border: 2pt solid white;
+    align-self: center;
+    margin-top: 5em;
+}
+
+.window-header {
+    border-bottom: 2pt solid white;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-size: 30pt;
+    padding: 0.5em;
+}
+
+.middle {
+    background: linear-gradient(45deg, #ffffff 0%, #ffffff 5%,transparent 5%, transparent 10%, #ffffff 10%, #ffffff 15%,transparent 15%,transparent 20%, #ffffff 20%, #ffffff 25%,transparent 25%,transparent 30%, #ffffff 30%, #ffffff 35%,transparent 35%,transparent 40%, #ffffff 40%, #ffffff 45%,transparent 45%,transparent 50%, #ffffff 50%, #ffffff 55%,transparent 55%,transparent 60%, #ffffff 60%, #ffffff 65%,transparent 65%,transparent 70%, #ffffff 70%, #ffffff 75%,transparent 70%,transparent 80%, #ffffff 80%, #ffffff 85%,transparent 85%,transparent 90%, #ffffff 90%, #ffffff 95%,transparent 95%), linear-gradient(135deg, #ffffff 0%, #ffffff 5%,transparent 5%, transparent 10%, #ffffff 10%, #ffffff 15%,transparent 15%,transparent 20%, #ffffff 20%, #ffffff 25%,transparent 25%,transparent 30%, #ffffff 30%, #ffffff 35%,transparent 35%,transparent 40%, #ffffff 40%, #ffffff 45%,transparent 45%,transparent 50%, #ffffff 50%, #ffffff 55%,transparent 55%,transparent 60%, #ffffff 60%, #ffffff 65%,transparent 65%,transparent 70%, #ffffff 70%, #ffffff 75%,transparent 70%,transparent 80%, #ffffff 80%, #ffffff 85%,transparent 85%,transparent 90%, #ffffff 90%, #ffffff 95%,transparent 95%);
+    background-size: 2em 2em;
+    background-color: #000000;
+    opacity: 1;
+    width: 100%;
+    height: 70%;
+    margin: 1em;
+    margin-left: 0;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-right: 1em;
+    justify-content: space-between;
+    width: 5em;
+}
+
+.button {
+    margin: 0.2em;
+}
+
+.exit {
+    cursor: pointer;
+}
+
+.window-body {
+    display: flex;
+    flex-direction: column;
+    height: 17.5em;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 2em;
+    height: 10em;
+}
+
+.login-form input {
+    background-color: #000000;
+    color: white;
+    margin-bottom: 0.7em;
+    font-family: 'LeviWindows';
+    font-size: 17pt;
+    width: 10em;
+    padding: 0.1em;
+}
+
+.login-form button {
+    background-color: #000000;
+    color: white;
+    border: 1pt solid white;
+    cursor: pointer;
+    font-family: 'LeviWindows';
+    font-size: 20pt;
+    padding: 0em 0.7em;
+}
+
+.login-form button:hover {
+    background-color: white;
+    color: black;
+}
+
+.shadow {
+    position: relative;
+}
+
+.shadow:after {
+    background: linear-gradient(45deg, #221e22 0%, #221e22 5%,transparent 5%, transparent 10%, #221e22 10%, #221e22 15%,transparent 15%,transparent 20%, #221e22 20%, #221e22 25%,transparent 25%,transparent 30%, #221e22 30%, #221e22 35%,transparent 35%,transparent 40%, #221e22 40%, #221e22 45%,transparent 45%,transparent 50%, #221e22 50%, #221e22 55%,transparent 55%,transparent 60%, #221e22 60%, #221e22 65%,transparent 65%,transparent 70%, #221e22 70%, #221e22 75%,transparent 70%,transparent 80%, #221e22 80%, #221e22 85%,transparent 85%,transparent 90%, #221e22 90%, #221e22 95%,transparent 95%);
+    background-size: 2em 2em;
+    background-color: #ffffff;
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    z-index: -1;
+  }
+
+  .shadowPlus4:after {
+    height: calc(100% + 3pt);
+    width: calc(100% + 3pt);
+  }
+
+.error-register {
+    word-wrap:break-word;
+    height: 1em;
+    font-size: 18pt;
+    width: 15em;
+}
+
+.click-here {
+    font-size: 20pt;
+    cursor: pointer;
+}
+
+.click-here:hover {
+    color: gray;
+}
+
+@media screen and (max-width: 768px){
+    .window {
+        width: 20em;
+        height: 15em;
+    }
+    .window-header {
+        height: 2em;
+    }
+    .window-body {
+        height: 14em;
+    }
+    .title {
+        font-size: 25pt;
+    }
+    .button{
+        font-size: 10pt;
+    }
+    .middle {
+        height: 60%;
+    }
+    .login-form{
+        margin-top: 1em;
+        height: 7em;
+    }
+    .login-form input {
+        font-size: 11pt;
+        margin-bottom: 1em;
+        width: 13em;
+    }
+    .login-form button {
+        font-size: 15pt;
+        padding: 0em 0.5em;
+    }
+    .error-register{
+        width: 9em;
+        font-size: 15pt;
+    }
+}

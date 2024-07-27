@@ -22,7 +22,7 @@ function Login() {
             window.location.href = '/handshakes';
             console.log(response);
         } catch (error) {
-            setError('Invalid username or password');
+            setError(error.response.data.error);
             setTimeout(() => {
                 setError('');
             }, 2000);
