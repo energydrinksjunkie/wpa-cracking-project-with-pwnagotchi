@@ -7,6 +7,7 @@ const Home = () => {
     <>
         <div className="home-container">
         <p className='title-home'>Welcome to WireMess</p>
+        <img src='https://i.gifer.com/DKke.gif' />
         <p className='desc'>
             WireMess is a powerful tool designed to help you analyze and crack WPA handshakes. With its user-friendly interface and advanced capabilities, you can efficiently manage and break through encrypted networks.
         </p>
