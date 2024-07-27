@@ -90,6 +90,7 @@ table {
   color: white;
   background-color: black;
   border: 1pt solid white;
+  transition: background-color 0.3s ease;
 }
 
 .under-table button:hover {
