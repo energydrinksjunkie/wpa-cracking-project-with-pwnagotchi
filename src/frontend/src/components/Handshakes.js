@@ -1,10 +1,14 @@
 import './Handshakes.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import xImg from '../assets/x.png';
+import minImg from '../assets/min.png';
+import maxImg from '../assets/max.png';
+import copy from '../assets/copy.png';
+
 const { REACT_APP_BACKEND_URL } = process.env;
 
-
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 7;
 
 function HandshakeList() {
   const [handshakes, setHandshakes] = useState([]);
@@ -13,16 +17,18 @@ function HandshakeList() {
   const [totalPages, setTotalPages] = useState(1);
   const [copySuccess, setCopySuccess] = useState('');
   const [file, setFile] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const [dragActive, setDragActive] = useState(false);
 
-  const handshake_url = REACT_APP_BACKEND_URL+'/handshake/browser';
-  const key_url = REACT_APP_BACKEND_URL+'/auth/api_key';
-  const handshakeExportUrl = REACT_APP_BACKEND_URL+'/handshake';
+  const handshake_url = REACT_APP_BACKEND_URL + '/handshake/browser';
+  const key_url = REACT_APP_BACKEND_URL + '/auth/api_key';
+  const handshakeExportUrl = REACT_APP_BACKEND_URL + '/handshake';
 
   useEffect(() => {
     const fetchHandshakes = async () => {
       try {
         const response = await axios.get(handshake_url, {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setHandshakes(response.data.reverse());
         setTotalPages(Math.ceil(response.data.length / ITEMS_PER_PAGE));
@@ -34,7 +40,7 @@ function HandshakeList() {
     const fetchApiKey = async () => {
       try {
         const response = await axios.get(key_url, {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setApiKey(response.data.api_key);
       } catch (error) {
@@ -51,8 +57,6 @@ function HandshakeList() {
 
     return () => clearInterval(interval);
   }, []);
-
-  
 
   const getStatusClassName = (status) => {
     switch (status) {
@@ -72,7 +76,8 @@ function HandshakeList() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(apiKey)
+    navigator.clipboard
+      .writeText(apiKey)
       .then(() => {
         setCopySuccess('API key copied to clipboard!');
         setTimeout(() => setCopySuccess(''), 2500);
@@ -83,25 +88,24 @@ function HandshakeList() {
       });
   };
 
-  
   const exportHandshakes = async () => {
     try {
-        const response = await axios.get(handshakeExportUrl, {
-            headers: { 'api_key': apiKey },
-            responseType: 'text'
-        });
+      const response = await axios.get(handshakeExportUrl, {
+        headers: { api_key: apiKey },
+        responseType: 'text',
+      });
 
-        const blob = new Blob([response.data], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'cracked.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+      const blob = new Blob([response.data], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'cracked.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     } catch (error) {
-        console.error('Error exporting handshakes:', error);
+      console.error('Error exporting handshakes:', error);
     }
   };
 
@@ -114,14 +118,17 @@ function HandshakeList() {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile) {
+      handleUpload(selectedFile);
+    }
   };
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-
+  const handleUpload = async (file) => {
     if (!file) {
-      alert('Please select a file to upload.');
+      setUploadMessage('Please select a file to upload.');
+      setTimeout(() => setUploadMessage(''), 2500);
       return;
     }
 
@@ -132,69 +139,145 @@ function HandshakeList() {
       const response = await axios.post(handshakeExportUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'api_key': apiKey
-        }
+          api_key: apiKey,
+        },
       });
 
-      alert('File uploaded successfully');
+      setUploadMessage('File uploaded successfully!');
+      setTimeout(() => setUploadMessage(''), 2500);
+      setFile(null); // Clear the selected file
+
       const updatedHandshakes = await axios.get(handshake_url, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setHandshakes(updatedHandshakes.data.reverse());
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Error uploading file');
+      setUploadMessage('Error uploading file');
+    }
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    const droppedFile = e.dataTransfer.files[0];
+    setFile(droppedFile);
+    if (droppedFile) {
+      handleUpload(droppedFile);
     }
   };
 
   return (
     <>
-      <h2>Handshake List</h2>
-      <table border={1}>
-        <thead>
-          <tr>
-            <th>Status</th>
-            <th>SSID</th>
-            <th>Password</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedHandshakes.map((handshake) => (
-            <tr key={handshake._id} className={getStatusClassName(handshake.status)}>
-              <td>{handshake.status}</td>
-              <td>{handshake.ssid}</td>
-              <td>{handshake.password}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="under-table">
-        <div className="pagination">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              className={index + 1 === currentPage ? 'active' : ''}
-            >
-              {index + 1}
-            </button>
-          ))}
+      <div className="handshake-background">
+        <div className="window-handshake shadow-handshake shadowPlus4-handshake">
+          <div className="window-header">
+            <p className="title-handshake">Handshake List</p>
+            <div className="middle"></div>
+            <div className="buttons">
+              <img src={minImg} alt="minimize" className="button" />
+              <img src={maxImg} alt="maximize" className="button" />
+              <img
+                src={xImg}
+                alt="close"
+                className="button exit"
+                onClick={() => (window.location.href = '/')}
+              />
+            </div>
+          </div>
+          <div className="window-body">
+            <table border={1}>
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>SSID</th>
+                  <th>Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedHandshakes.map((handshake) => (
+                  <tr key={handshake._id} className={getStatusClassName(handshake.status)}>
+                    <td>{handshake.status}</td>
+                    <td>{handshake.ssid}</td>
+                    <td>{handshake.password}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="under-table">
+              <div className="pagination">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={index + 1 === currentPage ? 'active' : ''}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+              <button onClick={exportHandshakes} className="export-button">
+                Export Handshakes
+              </button>
+            </div>
+          </div>
         </div>
-        <button onClick={exportHandshakes} className="export-button">Export Handshakes</button>
-      </div>
-      <h3>Upload PCAP File</h3>
-      <form onSubmit={handleUpload}>
-        <input type="file" onChange={handleFileChange} required />
-        <button type="submit" className="upload-button">Upload</button>
-      </form>
-      <p className="api-key">
-        {copySuccess && <p className="copy-success">{copySuccess}</p>}
-        Your API key is: <strong>{apiKey}</strong>
-        <button onClick={copyToClipboard} className="copy-button">Copy</button>
+        <div className="other">
+          <div className="upload">
+            <p>Upload PCAP File</p>
+            <div
+              className={`drop-area ${dragActive ? 'drag-active' : ''}`}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+            >
+              <input
+                id="file-upload"
+                type="file"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="file-upload" className="upload-label">
+                Drag & Drop or Click to Upload
+              </label>
+            </div>
+            {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
+          </div>
+          <div className="api">
+            <div className="key">
+            <p className="api-key">
+              Your API key is: <strong className='key-text'>{apiKey}</strong>
+        <img src={copy} onClick={copyToClipboard} className="copy-button" />
       </p>
+      </div>
+      <div>
       <p>API url: {handshakeExportUrl}</p>
+              {copySuccess && <p className="copy-success">{copySuccess}</p>}
+              </div>
+      </div>
+      </div>
+      </div>
     </>
   );
 }
-
 export default HandshakeList;

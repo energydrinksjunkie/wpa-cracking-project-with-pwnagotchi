@@ -1,16 +1,55 @@
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.under-table {
-  margin: 1.5em;
+.handshake-background {
   display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: space-evenly;
 }
 
+.window-handshake {
+  background-color: black;
+  width: 70em;
+  height: 37em;
+  border: 2pt solid white;
+  align-self: flex-start;
+}
+
+.shadow-handshake {
+  position: relative;
+}
+
+.shadow-handshake:after {
+  background: linear-gradient(45deg, #221e22 0%, #221e22 5%,transparent 5%, transparent 10%, #221e22 10%, #221e22 15%,transparent 15%,transparent 20%, #221e22 20%, #221e22 25%,transparent 25%,transparent 30%, #221e22 30%, #221e22 35%,transparent 35%,transparent 40%, #221e22 40%, #221e22 45%,transparent 45%,transparent 50%, #221e22 50%, #221e22 55%,transparent 55%,transparent 60%, #221e22 60%, #221e22 65%,transparent 65%,transparent 70%, #221e22 70%, #221e22 75%,transparent 70%,transparent 80%, #221e22 80%, #221e22 85%,transparent 85%,transparent 90%, #221e22 90%, #221e22 95%,transparent 95%);
+  background-size: 2em 2em;
+  background-color: #ffffff;
+  opacity: 1;
+  height: 100%;
+  width: 100%;
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  z-index: -1;
+}
+
+.shadowPlus4-handshake:after {
+  height: calc(100% + 3pt);
+  width: calc(100% + 3pt);
+}
+
+.title-handshake {
+  font-size: 30pt;
+  padding: 0.5em;
+  width: 5.2em;
+}
+
+
+table {
+  margin-top: 1em;
+  width: 95%;
+  border-collapse: collapse;
+  font-family: 'Courier New', Courier, monospace;
+}
 .pagination {
   text-align: center;
 }
@@ -63,51 +102,91 @@ th, td {
   color: black;
 }
 
-.api-key {
-  margin-top: auto;
-  margin-bottom: 2em;
+.other {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.upload p {
+  font-size: 25pt;
+  padding: 0;
+  margin: 0;
+}
+
+.drop-area {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin: 1em 0;
+  width: 20em;
+  height: 15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drag-active {
+  border-color: #007bff;
+  background-color: #e9f7ff;
+  color: #221e22;
+}
+
+.upload-label {
+  font-size: 20pt;
+}
+
+.upload-message {
+  margin-top: 1em;
+}
+
+.api {
+  font-size: 25pt;
+}
+
+.key-text {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 10pt;
+  position: relative;
+  bottom: 0.3em;
 }
 
 .copy-button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  padding: 0.1em;
+  border: 1px solid white;
+  margin-left: 0.2em;
   cursor: pointer;
 }
+
+@media screen and (max-width: 1500px) {
+  .other {
+    flex-direction: row;
+    margin-top: 2em;
+    justify-content: space-around;
+  }
+  .handshake-background {
+    flex-direction: column;
+  }
+  .window-handshake {
+    width: 50em;
+    align-self: center;
+  }
+  .title-handshake {
+    width: 5.4em;
+  }
+  .drop-area {
+    width: 15em;
+    height: 5em;
+    margin-top: 0.5em;
+  }
+  .api {
+    font-size: 20pt;
+  }
   
-.copy-button:hover {
-    background-color: #1976d2;
 }
 
-.copy-success {
-  color: green;
-  font-size: 14px;
-  text-align: center;
-}
+@media screen and (max-width: 768px) {
 
-.export-button {
-  padding: 10px 15px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: auto;
-}
   
-.export-button:hover {
-  background-color: #45a049;
-}
-
-.logout-button {
-  padding: 10px 15px;
-  background-color: #c32f27;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: auto;
 }
