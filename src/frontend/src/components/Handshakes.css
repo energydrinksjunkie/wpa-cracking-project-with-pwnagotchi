@@ -9,7 +9,7 @@
 .window-handshake {
   background-color: black;
   width: 70em;
-  height: 37em;
+  height: 50em;
   border: 2pt solid white;
   align-self: flex-start;
 }
@@ -43,38 +43,77 @@
   width: 5.2em;
 }
 
+.window-body-handshake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.table {
+  width: 95%;
+  margin-top: 1em;
+}
 
 table {
-  margin-top: 1em;
-  width: 95%;
+  width: 100%;
   border-collapse: collapse;
   font-family: 'Courier New', Courier, monospace;
-}
-.pagination {
-  text-align: center;
+  margin: 0;
 }
 
-.pagination button {
-  margin: 0 5px;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+.table-container {
+  height: 35em;
+  overflow: auto;
+  scrollbar-color: white black;
+  border: 1pt solid white;
+}
+
+.table-container table {
+  border: none;
+}
+
+.under-table {
+  justify-self: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin-top: 2em;
+}
+
+.under-table button {
+  font-size: 20pt;
+  padding: 0.2em 0.5em;
   cursor: pointer;
+  font-family: 'LeviWindows';
+  color: white;
+  background-color: black;
+  border: 1pt solid white;
 }
 
-.pagination button.active {
-  background-color: #007bff;
-  color: #fff;
-  border: 1px solid #007bff;
+.under-table button:hover {
+  background-color: white;
+  color: black;
 }
 
-.pagination button:hover:not(.active) {
-  background-color: #ddd;
+.under-table input {
+  font-size: 20pt;
+  padding: 0.2em 0.5em;
+  font-family: 'LeviWindows';
+  width: 10em;
+  background-color: black;
+  color: white;
+}
+
+.under-table input:focus {
+  outline: none;
 }
 
 th, td {
-  padding: 1em;
+  padding: 1em 0;
   text-align: center;
+  width: 33%;
 }
 
 .status-awaiting {
@@ -105,7 +144,7 @@ th, td {
 .other {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .upload p {
@@ -170,6 +209,7 @@ th, td {
   }
   .window-handshake {
     width: 50em;
+    height: 37em;
     align-self: center;
   }
   .title-handshake {
@@ -182,6 +222,9 @@ th, td {
   }
   .api {
     font-size: 20pt;
+  }
+  .table-container {
+    height: 24em;
   }
   
 }

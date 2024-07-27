@@ -19,6 +19,7 @@ function HandshakeList() {
   const [file, setFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState('');
   const [dragActive, setDragActive] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handshake_url = REACT_APP_BACKEND_URL + '/handshake/browser';
   const key_url = REACT_APP_BACKEND_URL + '/auth/api_key';
@@ -31,7 +32,6 @@ function HandshakeList() {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setHandshakes(response.data.reverse());
-        setTotalPages(Math.ceil(response.data.length / ITEMS_PER_PAGE));
       } catch (error) {
         console.error('Error fetching handshakes:', error);
       }
@@ -109,9 +109,9 @@ function HandshakeList() {
     }
   };
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const paginatedHandshakes = handshakes.slice(startIndex, endIndex);
+  const filteredHandshakes = handshakes.filter(handshake => 
+    handshake.ssid.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -145,7 +145,7 @@ function HandshakeList() {
 
       setUploadMessage('File uploaded successfully!');
       setTimeout(() => setUploadMessage(''), 2500);
-      setFile(null); // Clear the selected file
+      setFile(null);
 
       const updatedHandshakes = await axios.get(handshake_url, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
@@ -204,7 +204,9 @@ function HandshakeList() {
               />
             </div>
           </div>
-          <div className="window-body">
+          <div className="window-body-handshake">
+            <div className="table">
+            <div className="table-head">
             <table border={1}>
               <thead>
                 <tr>
@@ -213,8 +215,12 @@ function HandshakeList() {
                   <th>Password</th>
                 </tr>
               </thead>
+              </table>
+              </div>
+            <div className="table-container">
+              <table border={1}>
               <tbody>
-                {paginatedHandshakes.map((handshake) => (
+                {filteredHandshakes.map((handshake) => (
                   <tr key={handshake._id} className={getStatusClassName(handshake.status)}>
                     <td>{handshake.status}</td>
                     <td>{handshake.ssid}</td>
@@ -223,21 +229,19 @@ function HandshakeList() {
                 ))}
               </tbody>
             </table>
+            </div>
+            </div>
             <div className="under-table">
-              <div className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <button
-                    key={index + 1}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={index + 1 === currentPage ? 'active' : ''}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
               <button onClick={exportHandshakes} className="export-button">
                 Export Handshakes
               </button>
+              <input
+              type="text"
+              placeholder="Search by SSID..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
             </div>
           </div>
         </div>

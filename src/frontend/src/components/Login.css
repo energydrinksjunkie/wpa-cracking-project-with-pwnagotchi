@@ -73,6 +73,10 @@
     padding: 0.1em;
 }
 
+.login-form input:focus {
+    outline: none;
+}
+
 .login-form button {
     background-color: #000000;
     color: white;
