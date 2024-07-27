@@ -1,39 +1,33 @@
 .home-container {
+  align-self: center;
+  justify-self: center;
+  width: 90vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
-  margin-top: 5em;
+  align-items: center;
 }
 
-.home-container h1 {
-  font-size: 2.5rem;
+.title-home {
+  font-size: 100pt;
   margin-bottom: 20px;
-  color: #333;
+  font-weight: bold;
 }
-
-.home-container  {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 40px;
+.desc {
+  font-size: 25pt;
   text-align: justify;
 }
 
 .login-link {
-  display: inline-block;
   padding: 10px 20px;
-  font-size: 1rem;
+  font-size: 25pt;
   color: #fff;
-  background-color: #007bff;
+  background-color: black;
   text-decoration: none;
-  border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
 .login-link:hover {
-  background-color: #0056b3;
+  background-color: white;
+  color: black;
 }
