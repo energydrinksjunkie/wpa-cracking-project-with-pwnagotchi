@@ -5,17 +5,16 @@
     justify-content: center;
     text-align: center;
     padding: 20px;
-    height: 100vh;
   }
   
   .not-found-image {
     max-width: 100%;
     height: auto;
-    width: 400px; /* Adjust the width as needed */
+    width: 400px;
     margin-bottom: 20px;
   }
   
-  .not-found-container h2 {
+  .not-found-title {
     font-size: 40pt;
     color: #333;
     margin-bottom: 10px;
@@ -25,4 +24,19 @@
     font-size: 30pt;
     color: #555;
   }
+
+@media screen and (max-width: 768px) {
+    .not-found-title {
+      font-size: 30pt;
+    }
+
+    .not-found-container {
+      justify-content: flex-start;
+    }
+  
+    .not-found-container p {
+      font-size: 20pt;
+    }
+  
+}
   
