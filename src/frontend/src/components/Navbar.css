@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1em 2em;
 }
 
 .navbar-brand{
@@ -10,6 +11,37 @@
     font-size: 5pt;
 }
 
+.navbar-brand:hover{
+    color: gray;
+}
+
 .navbar-brand pre {
     margin: 0;
+}
+
+hr {
+    width: 100%;
+    overflow:hidden;
+    border: none;
+    margin-top: -1em;
+}
+
+hr:after {
+    content:"________________________________________________________________________________________________________";
+    letter-spacing: 1em;
+}
+
+@media screen and (max-width: 768px){
+    .navbar-brand{
+        font-size: 3pt;
+    }
+    .navbar{
+        padding: 1em;
+    }
+    hr:after {
+        content:"_________________________________________";
+        letter-spacing: 1em;
+        font-size: 5pt;
+        text-align: center;
+    }
 }

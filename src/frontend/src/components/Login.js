@@ -1,6 +1,9 @@
 import './Login.css';
 import React, { useState } from "react";
 import axios from "axios";
+import xImg from '../assets/x.png';
+import minImg from '../assets/min.png';
+import maxImg from '../assets/max.png';
 const { REACT_APP_BACKEND_URL } = process.env;
 
 function Login() {
@@ -29,8 +32,18 @@ function Login() {
 
     return (
             <>
-            <div className="login">
-                <h1>Login</h1>
+            <div className="window shadow shadowPlus4">
+                <div className="window-header">
+                    <p className="title">Login</p>
+                    <div className="middle"></div>
+                    <div className="buttons">
+                        <img src={minImg} alt="minimize" className="button" />
+                        <img src={maxImg} alt="maximize" className="button" />
+                        <img src={xImg} alt="close" className="button" onClick={() => window.location.href = '/'} />
+                        </div>
+                </div>
+                <div className="window-body">
+                <div className="login-form">
                 <input
                     type="text"
                     placeholder="Username"
@@ -44,8 +57,10 @@ function Login() {
                     onChange={e => setPassword(e.target.value)}
                 />
                 <button onClick={handleLogin}>Login</button>
-                {error && <p>{error}</p>}
+                <p className='error'>{error}</p>
+                </div>
                 <p className="click-here" onClick={() => window.location.href = '/register'}>Don't have an account?</p>
+            </div>
             </div>
         </>
     );

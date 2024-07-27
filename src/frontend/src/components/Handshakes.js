@@ -113,11 +113,6 @@ function HandshakeList() {
     setCurrentPage(pageNumber);
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
-  }
-
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -154,7 +149,6 @@ function HandshakeList() {
 
   return (
     <>
-    <button onClick={logout} className="logout-button">Logout</button>
       <h2>Handshake List</h2>
       <table border={1}>
         <thead>
