@@ -246,6 +246,7 @@ th, td {
   .api {
     font-size: 15pt;
     width: 9.1em;
+    margin-top: -1em;
   }
   .upload-label {
     font-size: 15pt;
@@ -269,7 +270,7 @@ th, td {
     width: 5em;
   }
   .copy-button{
-    display: none;
+    width: 0.5em;
   }
   
 }

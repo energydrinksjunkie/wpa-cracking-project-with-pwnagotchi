@@ -76,21 +76,41 @@ function HandshakeList() {
   };
 
   const copyToClipboard = () => {
-    if(navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard
-      .writeText(apiKey)
-      .then(() => {
-        setCopySuccess('API key copied to clipboard!');
-        setTimeout(() => setCopySuccess(''), 2500);
-      })
-      .catch((error) => {
-        console.error('Failed to copy API key:', error);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(apiKey)
+        .then(() => {
+          setCopySuccess('API key copied to clipboard!');
+          setTimeout(() => setCopySuccess(''), 2500);
+        })
+        .catch((error) => {
+          console.error('Failed to copy API key:', error);
+          setCopySuccess('Failed to copy API key');
+        });
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = apiKey;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+  
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          setCopySuccess('API key copied to clipboard!');
+          setTimeout(() => setCopySuccess(''), 2500);
+        } else {
+          setCopySuccess('Failed to copy API key');
+        }
+      } catch (error) {
+        console.error('Fallback: Oops, unable to copy', error);
         setCopySuccess('Failed to copy API key');
-      });
-    }
-      else {
-        console.log('Clipboard API not available');
       }
+  
+      document.body.removeChild(textArea);
+    }
   };
 
   const exportHandshakes = async () => {
