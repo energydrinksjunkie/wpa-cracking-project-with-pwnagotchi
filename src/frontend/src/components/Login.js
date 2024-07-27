@@ -39,7 +39,7 @@ function Login() {
                     <div className="buttons">
                         <img src={minImg} alt="minimize" className="button" />
                         <img src={maxImg} alt="maximize" className="button" />
-                        <img src={xImg} alt="close" className="button" onClick={() => window.location.href = '/'} />
+                        <img src={xImg} alt="close" className="button exit" onClick={() => window.location.href = '/'} />
                         </div>
                 </div>
                 <div className="window-body">

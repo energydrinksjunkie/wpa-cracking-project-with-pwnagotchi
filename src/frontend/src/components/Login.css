@@ -42,30 +42,50 @@
     margin: 0.2em;
 }
 
+.exit {
+    cursor: pointer;
+}
+
 .window-body {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    height: 17.5em;
+    justify-content: space-between;
     align-items: center;
-    height: 100%;
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 40%;
-    width: 100%;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 2em;
+    height: 10em;
 }
 
 .login-form input {
     background-color: #000000;
     color: white;
+    margin-bottom: 0.7em;
+    font-family: 'LeviWindows';
+    font-size: 17pt;
+    width: 10em;
+    padding: 0.1em;
 }
 
-,.login-form input:focus {
-    border: none;
+.login-form button {
+    background-color: #000000;
+    color: white;
+    border: 1pt solid white;
+    cursor: pointer;
+    font-family: 'LeviWindows';
+    font-size: 20pt;
+    padding: 0em 0.7em;
+}
+
+.login-form button:hover {
+    background-color: white;
+    color: black;
 }
 
 .shadow {
@@ -73,7 +93,7 @@
 }
 
 .shadow:after {
-    background: linear-gradient(45deg, #000000 0%, #000000 5%,transparent 5%, transparent 10%, #000000 10%, #000000 15%,transparent 15%,transparent 20%, #000000 20%, #000000 25%,transparent 25%,transparent 30%, #000000 30%, #000000 35%,transparent 35%,transparent 40%, #000000 40%, #000000 45%,transparent 45%,transparent 50%, #000000 50%, #000000 55%,transparent 55%,transparent 60%, #000000 60%, #000000 65%,transparent 65%,transparent 70%, #000000 70%, #000000 75%,transparent 70%,transparent 80%, #000000 80%, #000000 85%,transparent 85%,transparent 90%, #000000 90%, #000000 95%,transparent 95%);
+    background: linear-gradient(45deg, #221e22 0%, #221e22 5%,transparent 5%, transparent 10%, #221e22 10%, #221e22 15%,transparent 15%,transparent 20%, #221e22 20%, #221e22 25%,transparent 25%,transparent 30%, #221e22 30%, #221e22 35%,transparent 35%,transparent 40%, #221e22 40%, #221e22 45%,transparent 45%,transparent 50%, #221e22 50%, #221e22 55%,transparent 55%,transparent 60%, #221e22 60%, #221e22 65%,transparent 65%,transparent 70%, #221e22 70%, #221e22 75%,transparent 70%,transparent 80%, #221e22 80%, #221e22 85%,transparent 85%,transparent 90%, #221e22 90%, #221e22 95%,transparent 95%);
     background-size: 2em 2em;
     background-color: #ffffff;
     opacity: 1;
@@ -93,10 +113,16 @@
 
 .error {
     height: 1em;
+    font-size: 18pt;
 }
 
 .click-here {
     font-size: 20pt;
+    cursor: pointer;
+}
+
+.click-here:hover {
+    color: gray;
 }
 
 @media screen and (max-width: 768px){
@@ -104,5 +130,32 @@
         width: 20em;
         height: 15em;
     }
-    
+    .window-header {
+        height: 2em;
+    }
+    .window-body {
+        height: 14em;
+    }
+    .title {
+        font-size: 25pt;
+    }
+    .button{
+        font-size: 10pt;
+    }
+    .middle {
+        height: 60%;
+    }
+    .login-form{
+        margin-top: 1em;
+        height: 7em;
+    }
+    .login-form input {
+        font-size: 11pt;
+        margin-bottom: 1em;
+        width: 13em;
+    }
+    .login-form button {
+        font-size: 15pt;
+        padding: 0em 0.5em;
+    }
 }
