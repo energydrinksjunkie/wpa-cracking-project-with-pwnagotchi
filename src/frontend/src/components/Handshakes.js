@@ -76,6 +76,7 @@ function HandshakeList() {
   };
 
   const copyToClipboard = () => {
+    if(navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(apiKey)
       .then(() => {
@@ -86,6 +87,10 @@ function HandshakeList() {
         console.error('Failed to copy API key:', error);
         setCopySuccess('Failed to copy API key');
       });
+    }
+      else {
+        console.log('Clipboard API not available');
+      }
   };
 
   const exportHandshakes = async () => {

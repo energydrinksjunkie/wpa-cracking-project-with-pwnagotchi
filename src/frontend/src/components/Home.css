@@ -31,3 +31,19 @@
   background-color: white;
   color: black;
 }
+
+@media screen and (max-width: 768px) {
+  .title-home {
+    font-size: 40pt;
+  }
+  .desc {
+    font-size: 15pt;
+  }
+  .login-link {
+    font-size: 15pt;
+  }
+  .home-container img {
+    width: 50%;
+  }
+  
+}

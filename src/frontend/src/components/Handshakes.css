@@ -231,6 +231,44 @@ th, td {
 }
 
 @media screen and (max-width: 768px) {
+  .window-handshake {
+    width: 20em;
+    height: 25em;
+  }
 
+  .table-container {
+    height: 15em;
+  }
+  .drop-area {
+    width: 5em;
+    height: 3em;
+  }
+  .api {
+    font-size: 15pt;
+  }
+  .upload-label {
+    font-size: 15pt;
+  }
+  th, td {
+    font-size: 5pt;
+  }
+  .title-handshake {
+    font-size: 15pt;
+    width: 9.1em;
+  }
+
+  .upload p {
+    font-size: 15pt;
+  }
+
+  .under-table button {
+    font-size: 15pt;
+  }
+  .under-table input {
+    width: 5em;
+  }
+  .copy-button{
+    display: none;
+  }
   
 }
