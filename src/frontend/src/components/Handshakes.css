@@ -175,6 +175,7 @@ th, td {
 
 .upload-label {
   font-size: 20pt;
+  cursor: pointer;
 }
 
 .upload-message {
