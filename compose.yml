@@ -1,12 +1,21 @@
 version: '3'
 services:
+  frontend:
+    build:
+      context: ./src/frontend
+    ports:
+      - "4000:4000"
+    env_file:
+      - src/frontend/.env
+    depends_on:
+      - backend
   backend:
-    image: wpa-cracking-backend:latest
-    container_name: backend
+    build: 
+      context: ./src/backend
     ports:
       - "3000:3000"
     env_file:
-      - .env
+      - src/backend/.env
     depends_on:
       - mongodb
       - redis
