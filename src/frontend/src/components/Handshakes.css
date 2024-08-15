@@ -142,6 +142,11 @@ th, td {
   color: black;
 }
 
+.status-not-extracted {
+  background-color: #c32f27;
+  color: black;
+}
+
 .other {
   display: flex;
   flex-direction: column;

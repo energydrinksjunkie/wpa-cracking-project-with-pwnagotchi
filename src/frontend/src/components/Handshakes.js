@@ -70,6 +70,8 @@ function HandshakeList() {
         return 'status-exhausted';
       case 'Failed':
         return 'status-failed';
+      case 'Handshake can\'t be extracted':
+        return 'status-not-extracted';
       default:
         return '';
     }
