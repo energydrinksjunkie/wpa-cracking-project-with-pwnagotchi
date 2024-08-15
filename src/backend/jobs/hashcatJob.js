@@ -76,7 +76,7 @@ const hashcatJob = async (job) => {
                         reject(new Error('No valid passwords found in hashcat --show output.'));
                     }
                 } else {
-                    handshake.status = 'Failed';
+                    handshake.status = 'Handshake not found';
                     await handshake.save();
                     reject(new Error('No passwords found in hashcat --show output.'));
                 }

@@ -35,9 +35,6 @@ class WpaSec(plugins.Plugin):
             payload = {'pcap': file_to_upload}
 
             api_url = self.options['api_url']
-            if not api_url.endswith('/'):
-                api_url = f"{api_url}/"
-            api_url = f"{api_url}handshake/"
 
             try:
                 result = requests.post(api_url,
@@ -55,9 +52,6 @@ class WpaSec(plugins.Plugin):
         Downloads the results from specified endpoint and safes them to output
         """
         api_url = self.options['api_url']
-        if not api_url.endswith('/'):
-            api_url = f"{api_url}/"
-        api_url = f"{api_url}handshake/"
 
         headers = {'api_key': self.options['api_key']}
         try:

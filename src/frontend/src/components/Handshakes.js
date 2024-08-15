@@ -68,7 +68,7 @@ function HandshakeList() {
         return 'status-cracked';
       case 'Exhausted':
         return 'status-exhausted';
-      case 'Failed':
+      case 'Handshake not found':
         return 'status-failed';
       default:
         return '';
