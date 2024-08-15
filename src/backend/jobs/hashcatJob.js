@@ -46,7 +46,7 @@ const hashcatJob = async (job) => {
                     return reject(new Error('Hashcat exhausted the wordlist.'));
                 } else {
                     console.error(`Hashcat process exited with code ${code}`);
-                    handshake.status = 'Failed';
+                    handshake.status = 'Handshake not found';
                     await handshake.save();
                     return reject(new Error(`Hashcat process exited with code ${code}\n${hashcatError}`));
                 }
