@@ -22,7 +22,7 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
 
     console.log(`PCAP Path: ${pcapPath}`);
     console.log(`Output Path: ${outputPath}`);
-    a0e45a971223
+
     const filename = req.file.originalname;
     const ssid = filename.split('_')[0];
 
@@ -38,11 +38,9 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
             return res.status(400).send('Handshake already submitted.');
         }
 
-        const newHandshake = await Handshake.create({
-            userId: req.user._id,
-            filename: filename,
-            ssid: ssid
-        });
+        const newHandshake = await Handshake.create({userId: req.user._id,
+                                                    filename: filename,
+                                                    ssid: ssid});
 
         await new Promise((resolve, reject) => {
             const hcxProcess = spawn('hcxpcapngtool', [pcapPath, '-o', outputPath]);
@@ -55,25 +53,20 @@ router.post('/', verifyContentTypeMiddleware, verifyApiKey, upload.single('pcap'
                 console.error(`stderr: ${data}`);
             });
 
-            hcxProcess.on('close', async (code) => {
+            hcxProcess.on('close', (code) => {
                 if (code !== 0) {
-                    await Handshake.updateOne(
-                        { _id: newHandshake._id },
-                        { status: 'Handshake can\'t be extracted' }
-                    );
                     return reject(new Error(`hcxpcapngtool process exited with code ${code}`));
                 }
-
-                await hashcatQueue.add('hashcat-job', { filePath: outputPath, handshakeId: newHandshake._id });
-
-                fs.unlink(pcapPath, (unlinkErr) => {
-                    if (unlinkErr) {
-                        console.error(`Error deleting uploaded file: ${unlinkErr}`);
-                    }
-                });
-
                 resolve();
             });
+        });
+
+        hashcatQueue.add('hashcat-job',{filePath: outputPath, handshakeId: newHandshake._id});
+
+        fs.unlink(pcapPath, (unlinkErr) => {
+            if (unlinkErr) {
+                console.error(`Error deleting uploaded file: ${unlinkErr}`);
+            }
         });
 
         res.send('File uploaded and handshake extracted. Hashcat will process in the background.');
