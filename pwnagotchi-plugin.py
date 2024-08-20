@@ -8,7 +8,7 @@ from pwnagotchi import plugins
 from json.decoder import JSONDecodeError
 
 
-class WpaSec(plugins.Plugin):
+class PwangotchiPlugin(plugins.Plugin):
     __author__ = 'energydrinksjunkie'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
