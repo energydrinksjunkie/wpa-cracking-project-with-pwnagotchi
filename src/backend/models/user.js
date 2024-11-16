@@ -15,6 +15,12 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+userSchema.virtual('handshakes', {
+    ref: 'Handshake',
+    localField: '_id',
+    foreignField: 'userId',
+});
+
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
